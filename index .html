@@ -35,6 +35,7 @@ button {
     border: none;
     border-radius: 8px;
     margin-top: 20px;
+    cursor: pointer; /* 鼠标放上去变成小手，体验更好 */
 }
 
 /* 爱心动画 */
@@ -46,8 +47,9 @@ button {
 }
 
 @keyframes float {
-    0% {transform: translateY(0); opacity:1;}
-    100% {transform: translateY(-800px); opacity:0;}
+    0% { transform: translateY(0); opacity: 1; }
+    /* 使用 vh 单位确保爱心能飘出任何尺寸屏幕的顶部 */
+    100% { transform: translateY(-120vh); opacity: 0; } 
 }
 </style>
 </head>
@@ -69,19 +71,16 @@ var girlName = "小润";
 // ====== 在这里改在一起的日期（年, 月-1, 日）======
 var startDate = new Date(2024, 11, 24);
 
-document.getElementById("title").innerHTML =
-"给 " + girlName + " 的小网页 ❤️";
+document.getElementById("title").innerHTML = "给 " + girlName + " 的小网页 ❤️";
 
 var today = new Date();
 var diff = today - startDate;
 var days = Math.floor(diff / (1000 * 60 * 60 * 24));
 
-document.getElementById("days").innerHTML =
-"我们已经在一起 " + days + " 天了。";
+document.getElementById("days").innerHTML = "我们已经在一起 " + days + " 天了。";
 
 function showMessage() {
-    document.getElementById("message").innerHTML =
-    girlName + "，小润小润我们喜欢你。";
+    document.getElementById("message").innerHTML = girlName + "，我想认真陪你很久很久。";
 }
 
 // 爱心生成
@@ -89,15 +88,21 @@ setInterval(function(){
     var heart = document.createElement("div");
     heart.className = "heart";
     heart.innerHTML = "❤️";
+    
+    // 随机水平位置
     heart.style.left = Math.random() * window.innerWidth + "px";
-    heart.style.top = "800px";
+    
+    // 动态获取当前屏幕高度，让爱心永远从最底部生成
+    heart.style.top = window.innerHeight + "px"; 
+    
     document.body.appendChild(heart);
 
+    // 6秒后移除爱心
     setTimeout(function(){
         heart.remove();
-    },6000);
+    }, 6000);
 
-},500);
+}, 500);
 
 </script>
 
